@@ -85,7 +85,7 @@
     </dependencies>
 
     <build>
-        <finalName>stock-service</finalName>
+        <finalName>data-crawl</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
