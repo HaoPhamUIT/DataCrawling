@@ -9,7 +9,7 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: stock
+      database: estate
 server:
   port: 8080
   servlet:

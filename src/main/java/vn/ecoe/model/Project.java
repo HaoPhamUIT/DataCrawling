@@ -2,6 +2,8 @@ package vn.ecoe.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,14 +20,27 @@ public class Project implements Serializable {
 
     @Id
     private String id;
-    
+
     private String title;
-    
+
+    // Address information
     private String district;
-    
+    private String area;
     private String street;
-    
+
+    private String status;
+
     private String type;
-    
-    private BigDecimal price;
+
+    private Integer numBlocks;
+    private Integer numFloors;
+    private Integer numUnits;
+
+    private BigDecimal priceMin;
+    private BigDecimal priceMax;
+
+    private List<String> descriptions = new ArrayList<>();
+
+    private List<String> images = new ArrayList<>();
+
 }

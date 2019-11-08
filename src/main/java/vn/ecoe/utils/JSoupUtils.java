@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jsoup.nodes.Document;
+import org.springframework.data.util.Pair;
+import org.springframework.util.StringUtils;
 
 public class JSoupUtils {
     public static Map<String, String> extractPropertiesWithKeyValue(Document doc, String itemsSelector, String keySubSelector, String valSubSelector) {
@@ -37,12 +39,31 @@ public class JSoupUtils {
         return element.attr(attribute);
     }
 
-    public static BigDecimal parseBigDecimal(String text) {
-        if (text == null)
+    public static Pair<String, String> splitToRange(String value, String separator) {
+        if (StringUtils.isEmpty(value))
+            return Pair.of(null, null);
+        String[] range = value.split(separator);
+        return Pair.of(range[0], range.length > 1 ? range[1] : range[0]);
+    }
+
+    public static BigDecimal tryParseBigDecimal(String text) {
+        if (StringUtils.isEmpty(text = StringUtils.trimWhitespace(text)))
             return null;
-        text = text.trim();
-        if (text.isEmpty())
+        try {
+            return new BigDecimal(text);
+        } catch (NumberFormatException e) {
             return null;
-        return new BigDecimal(text);
+        }
+    }
+
+    public static Integer tryParseInt(String text) {
+        if (StringUtils.isEmpty(text = StringUtils.trimWhitespace(text)))
+            return null;
+        text = text.replace(",", "");
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }
