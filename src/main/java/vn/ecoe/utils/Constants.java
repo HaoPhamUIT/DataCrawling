@@ -67,5 +67,13 @@ public class Constants {
     public static final String CAN_NOT_BE_FOUND_FILE_MESSAGE = "Cannot be found file or file is illegal";
     public static final String CAN_NOT_BE_FOUND_ENTITY_MESSAGE = "Cannot be found entity";
 
+    public final static String HEADER_KEY_DISTRICT = "Quận";
+    public final static String HEADER_KEY_AREA = "Khu dân cư";
+    public final static String HEADER_KEY_STREET = "Đường";
+    public final static String SUMMARY_KEY_STATUS = "Trạng thái:";
+    public final static String SUMMARY_KEY_TYPE = "Loại hình:";
+    public final static String SUMMARY_KEY_NUM_UNITS = "Số căn:";
+    public final static String SUMMARY_KEY_NUM_BLOCKS = "Số block:";
+    public final static String SUMMARY_KEY_NUM_FLOORS = "Số tầng:";
 
 }

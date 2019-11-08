@@ -19,7 +19,7 @@ import java.util.Collections;
 public class SwaggerConfig {
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("vn.com.stock.api"))
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("vn.ecoe.api"))
                 .build().apiInfo(apiInfo());
     }
 
