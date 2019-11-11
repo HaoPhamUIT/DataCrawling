@@ -58,8 +58,7 @@ public class Constants {
 
     private Constants() {
     }
-
-
+    
     public static final String URL_GET_IMAGE = "http://ra.vcsc.com.vn/Home/ExportExcel?title=Ng%C3%A0nh%20T%E1%BB%95ng%20quan&url=http%253a%252f%252fra.vcsc.com.vn%252fSector%252fP_SectorSummary%252f169%253ficbLevel%253d1%2526isExport%253dTrue&fileName=nganh_all";
     /**
      * Define message for 400 error code
@@ -75,5 +74,19 @@ public class Constants {
     public final static String SUMMARY_KEY_NUM_UNITS = "Số căn:";
     public final static String SUMMARY_KEY_NUM_BLOCKS = "Số block:";
     public final static String SUMMARY_KEY_NUM_FLOORS = "Số tầng:";
-
+       
+    // Constant key values used for identifying fetched data from the Land page     
+    public final static String LAND_BASIC_KEY_ACREAGE = "Diện tích";
+    public final static String LAND_BASIC_KEY_AREA_OF_FLOOR = "Diện tích sàn";
+    public final static String LAND_BASIC_KEY_AREA_OF_USE = "Diện tích sử dụng";
+    public final static String LAND_BASIC_KEY_LENGTH = "Chiều dài";
+    public final static String LAND_BASIC_KEY_NUM_BATHROOMS = "Phòng tắm";
+    public final static String LAND_BASIC_KEY_NUM_BEDROOMS = "Phòng ngủ";
+    public final static String LAND_BASIC_KEY_NUM_FLOORS = "Số tầng";
+    public final static String LAND_BASIC_KEY_PRICE = "Giá bán";
+    public final static String LAND_BASIC_KEY_SALE_START_DATE = "Thời gian bắt đầu bán";
+    public final static String LAND_BASIC_KEY_TYPE = "Loại hình";    
+    public final static String LAND_BASIC_KEY_USES = "Mục đích sử dụng";    
+    public final static String LAND_BASIC_KEY_WIDTH = "Chiều rộng";
+   
 }
