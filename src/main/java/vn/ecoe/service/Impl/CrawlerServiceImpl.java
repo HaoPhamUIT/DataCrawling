@@ -1,17 +1,17 @@
 package vn.ecoe.service.Impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import vn.ecoe.exception.ResourceNotFoundException;
 import vn.ecoe.model.Project;
-import vn.ecoe.repository.ProjectRepository;
 import vn.ecoe.service.CrawlerService;
 import vn.ecoe.utils.Constants;
 import vn.ecoe.utils.JSoupUtils;
@@ -20,12 +20,8 @@ import vn.ecoe.utils.JSoupUtils;
 public class CrawlerServiceImpl implements CrawlerService {
 
     public Project fetchProject(String key, String url) {
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            throw new ResourceNotFoundException(Constants.CAN_NOT_BE_FOUND_ENTITY_MESSAGE);
-        }
+        System.out.println("fetching key " + key + " from " + url);
+        Document doc = fetchUrlOrThrow(url);
 
         var project = new Project();
         project.setId(key);
@@ -58,11 +54,31 @@ public class CrawlerServiceImpl implements CrawlerService {
         return project;
     }
 
-
+    public List<String> fetchProjectKeys(String url) {
+        Document doc = fetchUrlOrThrow(url);
+        List<String> keys = new ArrayList<>();
+        for (var el : doc.select(".search-result .result-body article.projectCard-list div.cover-image a")) {
+            var refUrl = el.attr("href");
+            if (StringUtils.isEmpty(refUrl))
+                continue;
+            var parts = refUrl.split("/");
+            if (parts.length > 1)
+                keys.add(parts[parts.length - 1]);
+        }
+        System.out.println("fetched keys " + keys);
+        return keys;
+    }
 
     private String extractAddressProperty(Document doc, String key) {
         return JSoupUtils.extractAttribute(doc,
                 ".project-header div.address a[title='" + key + "'] meta[itemprop='name']", "content");
     }
 
+    private Document fetchUrlOrThrow(String url) {
+        try {
+            return Jsoup.connect(url).get();
+        } catch (IOException e) {
+            throw new ResourceNotFoundException(Constants.CAN_NOT_BE_FOUND_ENTITY_MESSAGE);
+        }
+    }
 }

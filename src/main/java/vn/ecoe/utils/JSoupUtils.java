@@ -41,7 +41,7 @@ public class JSoupUtils {
 
     public static Pair<String, String> splitToRange(String value, String separator) {
         if (StringUtils.isEmpty(value))
-            return Pair.of(null, null);
+            return Pair.of("", "");
         String[] range = value.split(separator);
         return Pair.of(range[0], range.length > 1 ? range[1] : range[0]);
     }
