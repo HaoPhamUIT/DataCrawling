@@ -7,10 +7,10 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javafx.util.Pair;
 import vn.ecoe.exception.ResourceNotFoundException;
 import vn.ecoe.model.Land;
 import vn.ecoe.model.Project;
@@ -144,7 +144,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
             if (utilityItem == null || !utilityItem.hasText() || YesOrNo == null || YesOrNo.isEmpty())
             	continue;
-            var newPair = new Pair<String,String>(utilityItem.text(), YesOrNo);
+            var newPair = Pair.of(utilityItem.text(), YesOrNo);
             land.getUtilities().add(newPair);               
         }
         
@@ -168,7 +168,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
             if (furnitureItem == null || !furnitureItem.hasText() || YesOrNo == null || YesOrNo.isEmpty())
             	continue;
-            var newPair = new Pair<String,String>(furnitureItem.text(), YesOrNo);
+            var newPair = Pair.of(furnitureItem.text(), YesOrNo);
             land.getFurniture().add(newPair);              
         }
         
@@ -192,7 +192,7 @@ public class CrawlerServiceImpl implements CrawlerService {
 
             if (appliancesItem == null || !appliancesItem.hasText() || YesOrNo == null || YesOrNo.isEmpty())
             	continue;
-            var newPair = new Pair<String,String>(appliancesItem.text(), YesOrNo);
+            var newPair = Pair.of(appliancesItem.text(), YesOrNo);
             land.getAppliances().add(newPair);                
         }
              
