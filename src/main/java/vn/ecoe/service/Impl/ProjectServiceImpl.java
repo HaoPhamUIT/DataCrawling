@@ -10,6 +10,7 @@ import vn.ecoe.model.Project;
 import vn.ecoe.repository.ProjectRepository;
 import vn.ecoe.service.ProjectService;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -28,9 +29,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     public Pair<String, String> nextUrlToCrawl() {
         if (keysLeft == null || keysLeft.isEmpty()) {
-            // TODO: add multiple starting points, e.g. HCMC, Ha Noi, Da Nang, Hai Phong, etc. and do
-            // breadth-search from them, first going over all starting cities at areaIteration=0, then 1...
-            var locationParams = latLonUrlParams(10.817303082969843, 106.738454294191, areaIteration++);
+            var point = STARTING_POINTS.get(currentStartingPoint++);
+            if (currentStartingPoint >= STARTING_POINTS.size()) {
+                currentStartingPoint = 0;
+                areaIteration++;
+            }
+            var locationParams = latLonUrlParams(point.getFirst(), point.getSecond(), areaIteration);
             var keys = crawlerService.fetchProjectKeys(DISCOVER_URL + locationParams);
             keysLeft = new LinkedList<>(keys);
         }
@@ -40,11 +44,17 @@ public class ProjectServiceImpl implements ProjectService {
         return Pair.of(key, URL + key);
     }
     private int areaIteration = 0;
+    private int currentStartingPoint = 0;
     private Queue<String> keysLeft;
 
     private final static String BASE_URL = "https://rever.vn/";
     private final static String URL = BASE_URL + "du-an/";
     private final static String DISCOVER_URL = BASE_URL + "s/unnamed-road/du-an/mua?zoom=16";
+    private final static List<Pair<Double, Double>> STARTING_POINTS = Arrays.asList(
+      Pair.of(10.780713032102774, 106.70575660890066), // HCMC
+      Pair.of(21.028511, 105.804817), // Ha Noi
+      Pair.of(16.047079, 108.206230) // Da Nang
+    );
 
     private static String latLonUrlParams(double lat, double lon, int areaIter) {
         double SEARCH_BOX_REACH = 0.01;
@@ -89,6 +99,9 @@ public class ProjectServiceImpl implements ProjectService {
     @Scheduled(fixedRate = 1000)
     public void saveListProject() {
         var key_url = nextUrlToCrawl();
+        if (key_url == null)
+            return;
+
         var project = crawlerService.fetchProject(key_url.getFirst(), key_url.getSecond());
         System.out.println("fetched: " + project);
         if (validateForSave(project))
